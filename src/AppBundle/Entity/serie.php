@@ -125,4 +125,3 @@ class serie
         return $this->nbEpisode;
     }
 }
-

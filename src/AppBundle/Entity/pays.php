@@ -63,4 +63,3 @@ class pays
         return $this->nom;
     }
 }
-

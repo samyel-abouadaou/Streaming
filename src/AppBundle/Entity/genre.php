@@ -20,6 +20,11 @@ class genre
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="film", mappedBy="genre")
+     */
+    private $films;
 
     /**
      * @var string
@@ -62,5 +67,45 @@ class genre
     {
         return $this->nom;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->films = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add film
+     *
+     * @param \AppBundle\Entity\film $film
+     *
+     * @return genre
+     */
+    public function addFilm(\AppBundle\Entity\film $film)
+    {
+        $this->films[] = $film;
+
+        return $this;
+    }
+
+    /**
+     * Remove film
+     *
+     * @param \AppBundle\Entity\film $film
+     */
+    public function removeFilm(\AppBundle\Entity\film $film)
+    {
+        $this->films->removeElement($film);
+    }
+
+    /**
+     * Get films
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFilms()
+    {
+        return $this->films;
+    }
+}

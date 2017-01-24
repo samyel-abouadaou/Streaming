@@ -94,4 +94,3 @@ class saison
         return $this->nbEpisode;
     }
 }
-

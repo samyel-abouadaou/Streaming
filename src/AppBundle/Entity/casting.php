@@ -94,4 +94,3 @@ class casting
         return $this->prenom;
     }
 }
-
