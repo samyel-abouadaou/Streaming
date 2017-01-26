@@ -22,10 +22,27 @@ class film
     private $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="genre")
+     * @ORM\JoinTable(name="films_realises")
+     * @ORM\ManyToMany(targetEntity="casting", inversedBy="filmRealises")
+     */
+    private $realisateurs;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="genre", inversedBy="films")
      * @ORM\JoinColumn(name="genre_id")
      */
     private $genre;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="pays", inversedBy="films")
+     * @ORM\JoinColumn(name="pays_id")
+     */
+    private $pays;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="lien", mappedBy="film")
+     */
+    private $liens;
 
     /**
      * @var string
@@ -184,5 +201,128 @@ class film
     public function getGenre()
     {
         return $this->genre;
+    }
+
+    /**
+     * Set countries
+     *
+     * @param \AppBundle\Entity\pays $countries
+     *
+     * @return film
+     */
+    public function setCountries(\AppBundle\Entity\pays $countries = null)
+    {
+        $this->countries = $countries;
+
+        return $this;
+    }
+
+    /**
+     * Get countries
+     *
+     * @return \AppBundle\Entity\pays
+     */
+    public function getCountries()
+    {
+        return $this->countries;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->liens = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add lien
+     *
+     * @param \AppBundle\Entity\lien $lien
+     *
+     * @return film
+     */
+    public function addLien(\AppBundle\Entity\lien $lien)
+    {
+        $this->liens[] = $lien;
+
+        return $this;
+    }
+
+    /**
+     * Remove lien
+     *
+     * @param \AppBundle\Entity\lien $lien
+     */
+    public function removeLien(\AppBundle\Entity\lien $lien)
+    {
+        $this->liens->removeElement($lien);
+    }
+
+    /**
+     * Get liens
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLiens()
+    {
+        return $this->liens;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param \AppBundle\Entity\pays $pays
+     *
+     * @return film
+     */
+    public function setPays(\AppBundle\Entity\pays $pays = null)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \AppBundle\Entity\pays
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Add realisateur
+     *
+     * @param \AppBundle\Entity\casting $realisateur
+     *
+     * @return film
+     */
+    public function addRealisateur(\AppBundle\Entity\casting $realisateur)
+    {
+        $this->realisateurs[] = $realisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove realisateur
+     *
+     * @param \AppBundle\Entity\casting $realisateur
+     */
+    public function removeRealisateur(\AppBundle\Entity\casting $realisateur)
+    {
+        $this->realisateurs->removeElement($realisateur);
+    }
+
+    /**
+     * Get realisateurs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRealisateurs()
+    {
+        return $this->realisateurs;
     }
 }

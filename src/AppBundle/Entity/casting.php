@@ -20,6 +20,11 @@ class casting
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="film", mappedBy="realisateurs")
+     */
+    private $filmRealises;
 
     /**
      * @var string
@@ -92,5 +97,46 @@ class casting
     public function getPrenom()
     {
         return $this->prenom;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->filmRealises = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add filmRealise
+     *
+     * @param \AppBundle\Entity\film $filmRealise
+     *
+     * @return casting
+     */
+    public function addFilmRealise(\AppBundle\Entity\film $filmRealise)
+    {
+        $this->filmRealises[] = $filmRealise;
+
+        return $this;
+    }
+
+    /**
+     * Remove filmRealise
+     *
+     * @param \AppBundle\Entity\film $filmRealise
+     */
+    public function removeFilmRealise(\AppBundle\Entity\film $filmRealise)
+    {
+        $this->filmRealises->removeElement($filmRealise);
+    }
+
+    /**
+     * Get filmRealises
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFilmRealises()
+    {
+        return $this->filmRealises;
     }
 }

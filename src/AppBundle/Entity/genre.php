@@ -22,6 +22,11 @@ class genre
     private $id;
     
     /**
+     * @ORM\OneToMany(targetEntity="serie", mappedBy="genre")
+     */
+    private $serie;
+    
+    /**
      * @ORM\OneToMany(targetEntity="film", mappedBy="genre")
      */
     private $films;
@@ -107,5 +112,39 @@ class genre
     public function getFilms()
     {
         return $this->films;
+    }
+
+    /**
+     * Add serie
+     *
+     * @param \AppBundle\Entity\serie $serie
+     *
+     * @return genre
+     */
+    public function addSerie(\AppBundle\Entity\serie $serie)
+    {
+        $this->serie[] = $serie;
+
+        return $this;
+    }
+
+    /**
+     * Remove serie
+     *
+     * @param \AppBundle\Entity\serie $serie
+     */
+    public function removeSerie(\AppBundle\Entity\serie $serie)
+    {
+        $this->serie->removeElement($serie);
+    }
+
+    /**
+     * Get serie
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSerie()
+    {
+        return $this->serie;
     }
 }

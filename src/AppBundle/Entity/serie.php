@@ -20,6 +20,23 @@ class serie
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="saison", mappedBy="serie")
+     */
+    private $saison;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="pays", inversedBy="serie")
+     * @ORM\JoinColumn(name="pays_id")
+     */
+    private $pays;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="genre", inversedBy="serie")
+     * @ORM\JoinColumn(name="genre_id")
+     */
+    private $genre;
 
     /**
      * @var string
@@ -123,5 +140,94 @@ class serie
     public function getNbEpisode()
     {
         return $this->nbEpisode;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->saison = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add saison
+     *
+     * @param \AppBundle\Entity\saison $saison
+     *
+     * @return serie
+     */
+    public function addSaison(\AppBundle\Entity\saison $saison)
+    {
+        $this->saison[] = $saison;
+
+        return $this;
+    }
+
+    /**
+     * Remove saison
+     *
+     * @param \AppBundle\Entity\saison $saison
+     */
+    public function removeSaison(\AppBundle\Entity\saison $saison)
+    {
+        $this->saison->removeElement($saison);
+    }
+
+    /**
+     * Get saison
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSaison()
+    {
+        return $this->saison;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param \AppBundle\Entity\pays $pays
+     *
+     * @return serie
+     */
+    public function setPays(\AppBundle\Entity\pays $pays = null)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \AppBundle\Entity\pays
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Set genre
+     *
+     * @param \AppBundle\Entity\genre $genre
+     *
+     * @return serie
+     */
+    public function setGenre(\AppBundle\Entity\genre $genre = null)
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Get genre
+     *
+     * @return \AppBundle\Entity\genre
+     */
+    public function getGenre()
+    {
+        return $this->genre;
     }
 }
